@@ -108,10 +108,14 @@ class HangmanViewController: UIViewController {
                     CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2, newChar: Character(gs!))
                 } else if i > spacing[0] && i < spacing[1] {
                     CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-1, newChar: Character(gs!))
-                } else if i > spacing[1] && i < spacing[2] {
-                     CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-2, newChar: Character(gs!))
-                } else if i > spacing[2]  {
-                    CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-3, newChar: Character(gs!))
+                } else if i > spacing[1] {
+                    if spacing.count == 3 {
+                        if i < spacing[2] {
+                            CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-2, newChar: Character(gs!))
+                        }
+                    } else {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-2, newChar: Character(gs!))
+                    }
                 }
             }
         } else {
