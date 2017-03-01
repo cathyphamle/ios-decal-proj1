@@ -12,7 +12,6 @@ class HangmanModel {
     
     var phrase: String = ""
     var numGuesses = 0
-    var spaces: [Int] = []
     
     func setPhrase(phr : String) {
         phrase = phr
@@ -30,7 +29,8 @@ class HangmanModel {
         return underS
     }
     
-    func getSpaces() -> [Int] {
+    func getSpaces(str : String) -> [Int] {
+        var spaces: [Int] = []
         for i in 0...phrase.characters.count {
             if phrase.substring(atIndex: i) == " " {
                 spaces.append(i)

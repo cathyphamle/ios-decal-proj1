@@ -28,6 +28,7 @@ class HangmanViewController: UIViewController {
         let phrase: String = hangmanPhrases.getRandomPhrase()
         HangManM.setPhrase(phr: phrase)
         print(phrase)
+    
         CurrentGameState.text = HangManM.underscore(str: phrase)
     }
 
@@ -90,7 +91,7 @@ class HangmanViewController: UIViewController {
     @IBAction func GuessButton(_ sender: UIButton) {
         let correctPhrase = HangManM.phrase
         let gs = TypedGuess.text
-        let spacing = HangManM.getSpaces()
+        let spacing = HangManM.getSpaces(str: correctPhrase)
         if gs!.characters.count > 1 {
             moreThan1()
         }
@@ -102,22 +103,40 @@ class HangmanViewController: UIViewController {
                     indexes.append(i)
                 }
             }
-    
+            
             for i in indexes {
-                if spacing.isEmpty || i < spacing[0]  {
+                if spacing.count == 0 {
                     CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2, newChar: Character(gs!))
-                } else if i > spacing[0] && i < spacing[1] {
-                    CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-1, newChar: Character(gs!))
-                } else if i > spacing[1] {
-                    if spacing.count == 3 {
-                        if i < spacing[2] {
-                            CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-2, newChar: Character(gs!))
-                        }
-                    } else {
+                }
+                if spacing.count == 1 {
+                    if i < spacing[0] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2, newChar: Character(gs!))
+                    } else if i > spacing[0] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-1, newChar: Character(gs!))
+                    }
+                }
+                if spacing.count == 2 {
+                    if i < spacing[0] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2, newChar: Character(gs!))
+                    } else if i > spacing[0] && i < spacing[1] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-1, newChar: Character(gs!))
+                    } else if i > spacing[1]  {
                         CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-2, newChar: Character(gs!))
                     }
                 }
+                if spacing.count == 3 {
+                    if i < spacing[0] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2, newChar: Character(gs!))
+                    } else if i > spacing[0] && i < spacing[1] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-1, newChar: Character(gs!))
+                    } else if i > spacing[1] && i < spacing[2] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-2, newChar: Character(gs!))
+                    } else if i > spacing[2] {
+                        CurrentGameState.text = HangManM.changeInstances(myString: CurrentGameState.text, index: i*2-3, newChar: Character(gs!))
+                    }
+                }
             }
+
         } else {
             if gs!.characters.count == 1 {
                 HangManM.incrementGuess()
